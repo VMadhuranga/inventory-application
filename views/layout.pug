@@ -1,6 +1,26 @@
 doctype html
-html
+html(lang="en")
   head
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(charset='utf-8')
     title= title
   body
-    block content
+    header 
+      h1 Apparel Inventory Application
+    aside 
+      nav 
+        ul 
+          li
+            a(href="/") Home 
+          li
+            a(href="/products") All Products 
+          li
+            a(href="/manufacturers") All Manufacturers
+          li
+            a(href="/categories") All Categories 
+          li
+            a(href="/sizes") All Sizes 
+    main 
+      block content
+    footer 
+      p &copy; 2024 VMadhuranga 
