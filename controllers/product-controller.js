@@ -13,6 +13,25 @@ const productList = asyncHandler(async (req, res, next) => {
   });
 });
 
+const productDetail = asyncHandler(async (req, res, next) => {
+  const product = await ProductModel.findById(req.params.id)
+    .populate(["manufacturer", "categories", "availableSizes.size"])
+    .exec();
+
+  if (!product) {
+    const err = new Error("Product not found");
+    err.status = 404;
+
+    return next(err);
+  }
+
+  res.render("product-detail-view", {
+    title: product.name,
+    product: product,
+  });
+});
+
 module.exports = {
   productList,
+  productDetail,
 };
