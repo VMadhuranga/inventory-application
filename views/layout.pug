@@ -20,7 +20,18 @@ html(lang="en")
             a(href="/categories") All Categories 
           li
             a(href="/sizes") All Sizes 
+          hr 
+          li 
+            a(href="/product/create") Create Product
+          li 
+            a(href="/manufacturer/create") Create Manufacturer
+          li 
+            a(href="/category/create") Create Category
+          li 
+            a(href="/size/create") Create Size
     main 
       block content
     footer 
       p &copy; 2024 VMadhuranga 
+    
+    script(type="module", src="/javascripts/product-form.js") 
