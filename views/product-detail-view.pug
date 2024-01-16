@@ -19,3 +19,8 @@ block content
   ul 
     each sizes in product.availableSizes 
       li #{sizes.size.type} (#{sizes.quantity} Qty.)
+
+  hr
+
+  p
+    a(href= product.url + "/update") Update Product
