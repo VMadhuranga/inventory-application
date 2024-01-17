@@ -1,0 +1,12 @@
+extends layout 
+
+block content 
+  h2= title 
+
+  if manufacturers.length 
+    ul 
+      each manufacturer in manufacturers
+        li
+          a(href= manufacturer.url) #{manufacturer.name}
+  else 
+    p There're no manufacturers
