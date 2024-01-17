@@ -1,0 +1,14 @@
+extends layout 
+
+block content 
+  h2= title 
+  p= manufacturer.description 
+
+  h3 Products:
+  if manufacturerProducts.length 
+    ul 
+      each product in manufacturerProducts
+        li
+          a(href= product.url) #{product.name} 
+  else 
+    p This manufacturer has no products 
