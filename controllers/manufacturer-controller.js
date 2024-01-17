@@ -74,9 +74,65 @@ const manufacturerCreatePOST = [
   }),
 ];
 
+const manufacturerUpdateGET = asyncHandler(async (req, res, next) => {
+  const manufacturer = await ManufacturerModel.findById(req.params.id).exec();
+
+  if (manufacturer === null) {
+    const error = new Error("Manufacturer not found");
+    error.status = 404;
+
+    return next(error);
+  }
+
+  res.render("manufacturer-form-view", {
+    title: "Update Manufacturer",
+    manufacturer: manufacturer,
+  });
+});
+
+const manufacturerUpdatePOST = [
+  body("manufacturer-name", "Manufacturer name must not be empty")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("manufacturer-description", "Manufacturer description must not be empty")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    const manufacturer = new ManufacturerModel({
+      name: req.body["manufacturer-name"],
+      description: req.body["manufacturer-description"],
+      _id: req.params.id,
+    });
+
+    if (!errors.isEmpty()) {
+      res.render("manufacturer-form-view", {
+        title: "Create Manufacturer",
+        manufacturer: manufacturer,
+        errors: errors.array(),
+      });
+
+      return;
+    }
+
+    const updatedManufacturer = await ManufacturerModel.findByIdAndUpdate(
+      req.params.id,
+      manufacturer,
+      {},
+    );
+    res.redirect(updatedManufacturer.url);
+  }),
+];
+
 module.exports = {
   manufacturerListGET,
   manufacturerDetailGET,
   manufacturerCreateGET,
   manufacturerCreatePOST,
+  manufacturerUpdateGET,
+  manufacturerUpdatePOST,
 };
