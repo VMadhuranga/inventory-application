@@ -10,6 +10,14 @@ router.post(
   "/manufacturer/create",
   manufactureController.manufacturerCreatePOST,
 );
+router.get(
+  "/manufacturer/:id/update",
+  manufactureController.manufacturerUpdateGET,
+);
+router.post(
+  "/manufacturer/:id/update",
+  manufactureController.manufacturerUpdatePOST,
+);
 router.get("/manufacturer/:id", manufactureController.manufacturerDetailGET);
 
 module.exports = router;
