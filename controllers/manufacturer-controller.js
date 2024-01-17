@@ -1,4 +1,5 @@
 const asyncHandler = require("express-async-handler");
+const { body, validationResult } = require("express-validator");
 
 const ManufacturerModel = require("../models/manufacturer-model");
 const ProductModel = require("../models/product-model");
@@ -34,7 +35,48 @@ const manufacturerDetailGET = asyncHandler(async (req, res, next) => {
   });
 });
 
+const manufacturerCreateGET = (req, res, next) => {
+  res.render("manufacturer-form-view", {
+    title: "Create Manufacturer",
+  });
+};
+
+const manufacturerCreatePOST = [
+  body("manufacturer-name", "Manufacturer name must not be empty")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("manufacturer-description", "Manufacturer description must not be empty")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    const newManufacturer = new ManufacturerModel({
+      name: req.body["manufacturer-name"],
+      description: req.body["manufacturer-description"],
+    });
+
+    if (!errors.isEmpty()) {
+      res.render("manufacturer-form-view", {
+        title: "Create Manufacturer",
+        manufacturer: newManufacturer,
+        errors: errors.array(),
+      });
+
+      return;
+    }
+
+    await newManufacturer.save();
+    res.redirect(newManufacturer.url);
+  }),
+];
+
 module.exports = {
   manufacturerListGET,
   manufacturerDetailGET,
+  manufacturerCreateGET,
+  manufacturerCreatePOST,
 };
