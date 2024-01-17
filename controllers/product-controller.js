@@ -328,6 +328,24 @@ const productUpdatePOST = [
   }),
 ];
 
+const productDeleteGET = asyncHandler(async (req, res, next) => {
+  const product = await ProductModel.findById(req.params.id).exec();
+
+  if (product === null) {
+    res.redirect("/products");
+  }
+
+  res.render("product-delete-view", {
+    title: "Delete Product",
+    product: product,
+  });
+});
+
+const productDeletePOST = async (req, res, next) => {
+  await ProductModel.findByIdAndDelete(req.body["product-id"]);
+  res.redirect("/products");
+};
+
 module.exports = {
   productList,
   productDetail,
@@ -335,4 +353,6 @@ module.exports = {
   productCreatePOST,
   productUpdateGET,
   productUpdatePOST,
+  productDeleteGET,
+  productDeletePOST,
 };
