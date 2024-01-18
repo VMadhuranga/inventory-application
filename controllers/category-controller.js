@@ -118,6 +118,43 @@ const categoryUpdatePOST = [
   }),
 ];
 
+const categoryDeleteGet = asyncHandler(async (req, res, next) => {
+  const [category, categoryProducts] = await Promise.all([
+    CategoryModel.findById(req.params.id).exec(),
+    ProductModel.find({ categories: req.params.id }, "name").exec(),
+  ]);
+
+  if (category === null) {
+    res.redirect("/categories");
+  }
+
+  res.render("category-delete-view", {
+    title: "Delete Category",
+    category: category,
+    categoryProducts: categoryProducts,
+  });
+});
+
+const categoryDeletePOST = asyncHandler(async (req, res, next) => {
+  const [category, categoryProducts] = await Promise.all([
+    CategoryModel.findById(req.params.id).exec(),
+    ProductModel.find({ categories: req.params.id }, "name").exec(),
+  ]);
+
+  if (categoryProducts.length) {
+    res.render("category-delete-view", {
+      title: "Delete Category",
+      category: category,
+      categoryProducts: categoryProducts,
+    });
+
+    return;
+  }
+
+  await CategoryModel.findByIdAndDelete(req.params.id);
+  res.redirect("/categories");
+});
+
 module.exports = {
   categoryListGET,
   categoryDetailGET,
@@ -125,4 +162,6 @@ module.exports = {
   categoryCreatePOST,
   categoryUpdateGET,
   categoryUpdatePOST,
+  categoryDeleteGet,
+  categoryDeletePOST,
 };
