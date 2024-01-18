@@ -1,0 +1,18 @@
+extends layout 
+
+block content 
+  h2= title 
+
+  if categoryProducts.length 
+    p Remove this category from the following products before attempting to delete
+    
+    ul 
+      each product in categoryProducts
+        li 
+          a(href= product.url) #{product.name} 
+  else 
+    p Do you really want to delete this category
+
+    form(method="post") 
+      input#category-id(type="hidden", name="category-id", value= category._id)
+      button(type="submit") Delete
