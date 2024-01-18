@@ -128,6 +128,43 @@ const manufacturerUpdatePOST = [
   }),
 ];
 
+const manufacturerDeleteGET = asyncHandler(async (req, res, next) => {
+  const [manufacturer, manufacturerProducts] = await Promise.all([
+    ManufacturerModel.findById(req.params.id).exec(),
+    ProductModel.find({ manufacturer: req.params.id }, "name").exec(),
+  ]);
+
+  if (manufacturer === null) {
+    res.redirect("/manufacturers");
+  }
+
+  res.render("manufacturer-delete-view", {
+    title: "Delete Manufacturer",
+    manufacturer: manufacturer,
+    manufacturerProducts: manufacturerProducts,
+  });
+});
+
+const manufacturerDeletePost = async (req, res, next) => {
+  const [manufacturer, manufacturerProducts] = await Promise.all([
+    ManufacturerModel.findById(req.params.id).exec(),
+    ProductModel.find({ manufacturer: req.params.id }, "name").exec(),
+  ]);
+
+  if (manufacturerProducts.length) {
+    res.render("manufacturer-delete-view", {
+      title: "Delete Manufacturer",
+      manufacturer: manufacturer,
+      manufacturerProducts: manufacturerProducts,
+    });
+
+    return;
+  }
+
+  await ManufacturerModel.findByIdAndDelete(req.body["manufacturer-id"]);
+  res.redirect("/manufacturers");
+};
+
 module.exports = {
   manufacturerListGET,
   manufacturerDetailGET,
@@ -135,4 +172,6 @@ module.exports = {
   manufacturerCreatePOST,
   manufacturerUpdateGET,
   manufacturerUpdatePOST,
+  manufacturerDeleteGET,
+  manufacturerDeletePost,
 };
