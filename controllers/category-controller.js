@@ -1,4 +1,5 @@
 const asyncHandler = require("express-async-handler");
+const { body, validationResult } = require("express-validator");
 
 const CategoryModel = require("../models/category-model");
 const ProductModel = require("../models/product-model");
@@ -34,7 +35,43 @@ const categoryDetailGET = asyncHandler(async (req, res, next) => {
   });
 });
 
+const categoryCreateGET = (req, res, next) => {
+  res.render("category-form-view", {
+    title: "Create Category",
+  });
+};
+
+const categoryCreatePOST = [
+  body("category-name", "Category name must not be empty")
+    .trim()
+    .isLength({ min: 2 })
+    .escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    const newCategory = new CategoryModel({
+      name: req.body["category-name"],
+    });
+
+    if (!errors.isEmpty()) {
+      res.render("category-form-view", {
+        title: "Create Category",
+        category: newCategory,
+        errors: errors.array(),
+      });
+
+      return;
+    }
+
+    await newCategory.save();
+    res.redirect(newCategory.url);
+  }),
+];
+
 module.exports = {
   categoryListGET,
   categoryDetailGET,
+  categoryCreateGET,
+  categoryCreatePOST,
 };
