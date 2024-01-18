@@ -1,0 +1,12 @@
+extends layout 
+
+block content 
+  h2= title 
+
+  if sizes.length 
+    ul 
+      each size in sizes 
+        li 
+          a(href= size.url) #{size.type} 
+  else 
+    p There're no sizes available 
