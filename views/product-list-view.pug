@@ -3,10 +3,10 @@ extends layout
 block content
   h2= title
   
-  ul 
-    if products.length 
+  if products.length 
+    ul 
       each product in products
         li
           a(href= product.url) #{product.name}
-    else 
-      p There're no products
+  else 
+    p There're no products
