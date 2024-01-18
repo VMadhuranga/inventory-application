@@ -69,9 +69,60 @@ const categoryCreatePOST = [
   }),
 ];
 
+const categoryUpdateGET = asyncHandler(async (req, res, next) => {
+  const category = await CategoryModel.findById(req.params.id).exec();
+
+  if (category === null) {
+    const error = new Error("Category not found");
+    error.status = 404;
+
+    return next(error);
+  }
+
+  res.render("category-form-view", {
+    title: "Update Category",
+    category: category,
+  });
+});
+
+const categoryUpdatePOST = [
+  body("category-name", "Category name must not be empty")
+    .trim()
+    .isLength({ min: 2 })
+    .escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    const category = new CategoryModel({
+      name: req.body["category-name"],
+      _id: req.params.id,
+    });
+
+    if (!errors.isEmpty()) {
+      res.render("category-form-view", {
+        title: "Update Category",
+        category: category,
+        errors: errors.array(),
+      });
+
+      return;
+    }
+
+    const updatedCategory = await CategoryModel.findByIdAndUpdate(
+      req.params.id,
+      category,
+      {},
+    );
+    res.redirect(updatedCategory.url);
+  }),
+];
+
 module.exports = {
   categoryListGET,
   categoryDetailGET,
   categoryCreateGET,
   categoryCreatePOST,
+  categoryUpdateGET,
+  categoryUpdatePOST,
 };
