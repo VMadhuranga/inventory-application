@@ -1,4 +1,5 @@
 const asyncHandler = require("express-async-handler");
+const { body, validationResult } = require("express-validator");
 
 const SizeModel = require("../models/size-model");
 const ProductModel = require("../models/product-model");
@@ -32,7 +33,41 @@ const prodSizeDetailGET = asyncHandler(async (req, res, next) => {
   });
 });
 
+const prodSizeCreateGET = (req, res, next) => {
+  res.render("size-form-view", {
+    title: "Create Size",
+  });
+};
+
+const prodSizeCreatePOST = [
+  body("size-type", "Size type must not be empty")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    const newSize = new SizeModel({ type: req.body["size-type"] });
+
+    if (!errors.isEmpty()) {
+      res.render("size-form-view", {
+        title: "Create Size",
+        size: newSize,
+        errors: errors.array(),
+      });
+
+      return;
+    }
+
+    await newSize.save();
+    res.redirect(newSize.url);
+  }),
+];
+
 module.exports = {
   prodSizeListGET,
   prodSizeDetailGET,
+  prodSizeCreateGET,
+  prodSizeCreatePOST,
 };
