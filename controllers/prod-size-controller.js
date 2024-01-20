@@ -114,6 +114,43 @@ const prodSizeUpdatePOST = [
   }),
 ];
 
+const prodSizeDeleteGET = asyncHandler(async (req, res, next) => {
+  const [size, sizeProducts] = await Promise.all([
+    SizeModel.findById(req.params.id).exec(),
+    ProductModel.find({ "availableSizes.size": req.params.id }).exec(),
+  ]);
+
+  if (size === null) {
+    res.redirect("/sizes");
+  }
+
+  res.render("size-delete-view", {
+    title: "Delete Size",
+    size: size,
+    sizeProducts: sizeProducts,
+  });
+});
+
+const prodSizeDeletePOST = asyncHandler(async (req, res, next) => {
+  const [size, sizeProducts] = await Promise.all([
+    SizeModel.findById(req.params.id).exec(),
+    ProductModel.find({ "availableSizes.size": req.params.id }).exec(),
+  ]);
+
+  if (sizeProducts.length) {
+    res.render("size-delete-view", {
+      title: "Delete SIze",
+      size: size,
+      sizeProducts: sizeProducts,
+    });
+
+    return;
+  }
+
+  await SizeModel.findByIdAndDelete(req.params.id);
+  res.redirect("/sizes");
+});
+
 module.exports = {
   prodSizeListGET,
   prodSizeDetailGET,
@@ -121,4 +158,6 @@ module.exports = {
   prodSizeCreatePOST,
   prodSizeUpdateGET,
   prodSizeUpdatePOST,
+  prodSizeDeleteGET,
+  prodSizeDeletePOST,
 };
