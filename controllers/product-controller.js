@@ -6,7 +6,7 @@ const ManufacturerModel = require("../models/manufacturer-model");
 const CategoryModel = require("../models/category-model");
 const SizeModel = require("../models/size-model");
 
-const productList = asyncHandler(async (req, res, next) => {
+const productListGET = asyncHandler(async (req, res, next) => {
   const allProducts = await ProductModel.find({}, "name")
     .sort({ name: 1 })
     .exec();
@@ -17,7 +17,7 @@ const productList = asyncHandler(async (req, res, next) => {
   });
 });
 
-const productDetail = asyncHandler(async (req, res, next) => {
+const productDetailGET = asyncHandler(async (req, res, next) => {
   const product = await ProductModel.findById(req.params.id)
     .populate(["manufacturer", "categories", "availableSizes.size"])
     .exec();
@@ -347,8 +347,8 @@ const productDeletePOST = async (req, res, next) => {
 };
 
 module.exports = {
-  productList,
-  productDetail,
+  productListGET,
+  productDetailGET,
   productCreateGET,
   productCreatePOST,
   productUpdateGET,
