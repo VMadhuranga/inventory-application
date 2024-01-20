@@ -1,0 +1,18 @@
+extends layout 
+
+block content 
+  h2= title 
+
+  if sizeProducts.length 
+    p Remove this size from the following products before attempting to delete
+    
+    ul 
+      each product in sizeProducts 
+        li 
+          a(href= product.url) #{product.name} 
+  else 
+    p Do you really want to delete this size
+
+    form(method="post") 
+      input#size-id(type="hidden", name="size-id", value= size._id) 
+      button(type="submit") Delete
