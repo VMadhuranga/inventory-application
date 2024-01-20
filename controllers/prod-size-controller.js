@@ -65,9 +65,60 @@ const prodSizeCreatePOST = [
   }),
 ];
 
+const prodSizeUpdateGET = asyncHandler(async (req, res, next) => {
+  const size = await SizeModel.findById(req.params.id).exec();
+
+  if (size === null) {
+    const error = new Error("Size not found");
+    error.status = 404;
+
+    return next(error);
+  }
+
+  res.render("size-form-view", {
+    title: "Update Size",
+    size: size,
+  });
+});
+
+const prodSizeUpdatePOST = [
+  body("size-type", "Size type must not be empty")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    const size = new SizeModel({
+      type: req.body["size-type"],
+      _id: req.params.id,
+    });
+
+    if (!errors.isEmpty()) {
+      res.render("size-form-view", {
+        title: "Update Size",
+        size: size,
+        errors: errors.array(),
+      });
+
+      return;
+    }
+
+    const updatedSize = await SizeModel.findByIdAndUpdate(
+      req.params.id,
+      size,
+      {},
+    );
+    res.redirect(updatedSize.url);
+  }),
+];
+
 module.exports = {
   prodSizeListGET,
   prodSizeDetailGET,
   prodSizeCreateGET,
   prodSizeCreatePOST,
+  prodSizeUpdateGET,
+  prodSizeUpdatePOST,
 };
