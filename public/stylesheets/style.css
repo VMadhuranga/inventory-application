@@ -1,0 +1,121 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  max-width: 800px;
+  margin: 0 auto;
+  height: 100vh;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  grid-template-rows: min-content 1fr min-content;
+}
+
+header,
+aside,
+main,
+footer {
+  padding: 20px;
+}
+
+header,
+footer {
+  text-align: center;
+}
+
+form,
+ul {
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  text-decoration: solid;
+}
+
+button[type="submit"] {
+  padding: 5px;
+  font-size: inherit;
+}
+
+header {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
+aside {
+  grid-column: 1;
+  grid-row: 2;
+
+  ul {
+    list-style: none;
+    gap: 20px;
+  }
+}
+
+main {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  ul {
+    margin-left: 30px;
+    gap: 10px;
+  }
+
+  form {
+    gap: 20px;
+  }
+
+  form > div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  input,
+  select,
+  textarea {
+    padding: 5px 8px;
+    font-size: inherit;
+    font-family: inherit;
+  }
+
+  textarea {
+    resize: none;
+  }
+
+  input[type="checkbox"] {
+    margin-right: 8px;
+  }
+
+  input[placeholder="Qty"] {
+    margin-left: 8px;
+    width: 100px;
+    padding: 3px;
+    font-size: initial;
+  }
+}
+
+footer {
+  grid-column: 1 / -1;
+  grid-row: 3;
+}

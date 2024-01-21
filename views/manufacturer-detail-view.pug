@@ -2,9 +2,12 @@ extends layout
 
 block content 
   h2 Manufacturer: #{title} 
-  p Description: #{manufacturer.description} 
+  p 
+    strong Description:
+    |  #{manufacturer.description} 
 
-  p Products:
+  p 
+    strong Products:
   if manufacturerProducts.length 
     ul 
       each product in manufacturerProducts

@@ -3,7 +3,8 @@ extends layout
 block content 
   h2 Category: #{title} 
 
-  p Products:
+  p 
+    strong Products:
   if categoryProducts.length 
     ul 
       each product in categoryProducts

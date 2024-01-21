@@ -3,7 +3,8 @@ extends layout
 block content 
   h2 Size: #{title} 
 
-  p Products:
+  p 
+    strong Products:
   if sizeProducts.length 
     ul 
       each product in sizeProducts 
