@@ -2,20 +2,25 @@ extends layout
 
 block content 
   h2 Product: #{title} 
-  p Manufacturer: #{product.manufacturer.name} 
-  p Description: #{product.description} 
+  p 
+    strong Manufacturer:
+    |  #{product.manufacturer.name} 
+  p 
+    strong Description:
+    |  #{product.description} 
 
-  if product.inStock 
-    p In Stock 
-  else 
-    p Out of Stock 
+  p 
+    strong In Stock:
+    |  #{product.inStock ? "Yes" : "No"}
   
-  p Categories:
+  p 
+    strong Categories:
   ul 
     each category in product.categories 
       li= category.name 
   
-  p Available Sizes:
+  p 
+    strong Available Sizes:
   ul 
     each sizes in product.availableSizes 
       li #{sizes.size.type} (#{sizes.quantity} Qty.)

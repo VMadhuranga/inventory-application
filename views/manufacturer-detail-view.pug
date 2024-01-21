@@ -1,10 +1,13 @@
 extends layout 
 
 block content 
-  h2= title 
-  p= manufacturer.description 
+  h2 Manufacturer: #{title} 
+  p 
+    strong Description:
+    |  #{manufacturer.description} 
 
-  h3 Products:
+  p 
+    strong Products:
   if manufacturerProducts.length 
     ul 
       each product in manufacturerProducts

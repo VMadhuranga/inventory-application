@@ -1,9 +1,10 @@
 extends layout 
 
 block content 
-  h2= title 
+  h2 Category: #{title} 
 
-  h3 Products:
+  p 
+    strong Products:
   if categoryProducts.length 
     ul 
       each product in categoryProducts
