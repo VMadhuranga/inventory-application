@@ -308,7 +308,7 @@ const productUpdatePOST = [
       });
 
       res.render("product-form-view", {
-        title: "Create Product",
+        title: "Update Product",
         manufacturers: allManufacturers,
         categories: allCategories,
         sizes: allSizes,
