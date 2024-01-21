@@ -1,7 +1,7 @@
 extends layout 
 
 block content 
-  h2= manufacturer.name 
+  h2 #{title}: #{manufacturer.name} 
 
   if manufacturerProducts.length 
     p Delete the following products before attempting to delete this manufacturer

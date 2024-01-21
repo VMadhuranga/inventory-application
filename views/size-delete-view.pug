@@ -1,7 +1,7 @@
 extends layout 
 
 block content 
-  h2= title 
+  h2 #{title}: #{size.type} 
 
   if sizeProducts.length 
     p Remove this size from the following products before attempting to delete

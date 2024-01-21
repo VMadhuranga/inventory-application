@@ -1,7 +1,7 @@
 extends layout 
 
 block content 
-  h2= title 
+  h2 #{title}: #{category.name} 
 
   if categoryProducts.length 
     p Remove this category from the following products before attempting to delete

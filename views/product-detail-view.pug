@@ -5,10 +5,7 @@ block content
   p Manufacturer: #{product.manufacturer.name} 
   p Description: #{product.description} 
 
-  if product.inStock 
-    p In Stock 
-  else 
-    p Out of Stock 
+  p In Stock: #{product.inStock ? "Yes" : "No"}
   
   p Categories:
   ul 

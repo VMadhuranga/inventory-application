@@ -41,11 +41,11 @@ block content
         if size.checked 
           input(type="checkbox", name="product-sizes", id= size._id, value= size._id, checked)
           label(for= size._id ) #{size.type}:
-          input(type="number", name="product-size-quantity", min=1, id=`quantity${size._id}`,value= product.availableSizes[index].quantity, required)
+          input(type="number", name="product-size-quantity", min=1, id=`quantity${size._id}`, placeholder="Qty", value= product.availableSizes.find(({ size: selectedSize }) => selectedSize._id.toString() === size._id.toString()).quantity, required)
         else
           input(type="checkbox", name="product-sizes", id= size._id, value= size._id) 
           label(for= size._id ) #{size.type}:
-          input(type="number", name="product-size-quantity", min=1, id=`quantity${size._id}`,value= "", disabled, required)
+          input(type="number", name="product-size-quantity", min=1, id=`quantity${size._id}`, placeholder="Qty", value= "", disabled, required)
     
     div 
       button(type="submit") Submit

@@ -1,9 +1,8 @@
 extends layout 
 
 block content 
-  h2= title 
-  p Do you really want to delete this product? 
-  p Product Name: #{product.name} 
+  h2 #{title}: #{product.name}
+  p Do you really want to delete this product?
 
   form(method="post") 
     input#product-id(type="hidden", name="product-id", value= product._id) 
