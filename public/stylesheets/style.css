@@ -119,3 +119,16 @@ footer {
   grid-column: 1 / -1;
   grid-row: 3;
 }
+
+@media (max-width: 500px) {
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  aside {
+    ul {
+      gap: 8px;
+    }
+  }
+}
