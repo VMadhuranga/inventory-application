@@ -13,4 +13,4 @@ This project intends to practice:
 - How to write forms to get data from users, and update the database with this data.
 - How you can deploy an Express app to production.
 
-[Live preview](https://inventoryapplication.adaptable.app) :point_left:
+**TODO: Add live preview**
